@@ -2,21 +2,6 @@ use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    match metacall::initialize() {
-        Err(e) => {
-            println!("{}", e);
-            panic!();
-        }
-        _ => println!("MetaCall initialized"),
-    }
-
-    let scripts = ["helloworld.ts".to_string()];
-
-    if let Err(e) = metacall::load_from_file("ts", &scripts) {
-        println!("{}", e);
-        panic!();
-    }
-
     match metacall::metacall(
         "helloWorld", &[metacall::Any::Str("World".to_string())]
     ) {
@@ -37,6 +22,20 @@ async fn hello() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    match metacall::initialize() {
+        Err(e) => {
+            println!("{}", e);
+            panic!();
+        }
+        _ => println!("MetaCall initialized"),
+    }
+
+    let scripts = ["helloworld.ts".to_string()];
+
+    if let Err(e) = metacall::load_from_file("ts", &scripts) {
+        println!("{}", e);
+        panic!();
+    }
     HttpServer::new(|| {
         App::new()
             .service(hello)
