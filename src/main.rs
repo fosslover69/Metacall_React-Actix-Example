@@ -3,7 +3,7 @@ use actix_web::{get, App, HttpResponse, HttpServer, Responder};
 #[get("/")]
 async fn hello() -> impl Responder {
     match metacall::metacall(
-        "helloWorld", &[metacall::Any::Str("World".to_string())]
+        "hello", &[metacall::Any::Str("World".to_string())]
     ) {
         Err(e) => {
             println!("{}", e);
@@ -30,7 +30,7 @@ async fn main() -> std::io::Result<()> {
         _ => println!("MetaCall initialized"),
     }
 
-    let scripts = ["helloworld.ts".to_string()];
+    let scripts = ["app/App.tsx".to_string()];
 
     if let Err(e) = metacall::load_from_file("ts", &scripts) {
         println!("{}", e);
