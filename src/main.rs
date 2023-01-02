@@ -30,7 +30,7 @@ async fn main() -> std::io::Result<()> {
         _ => println!("MetaCall initialized"),
     }
 
-    let scripts = ["app/App.tsx".to_string()];
+    let scripts = ["App.tsx".to_string()];
 
     if let Err(e) = metacall::load_from_file("ts", &scripts) {
         println!("{}", e);
